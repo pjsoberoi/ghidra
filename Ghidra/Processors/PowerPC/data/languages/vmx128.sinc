@@ -86,5 +86,37 @@ vregD_21_25: vregD_21_25_11	is vregD_21_25_11 & vdh_02_03=0b11	{ export vregD_21
 :lvxl128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b0101100 & vregD_21_25 & opcode_00_01=0b11
 {}
 
+# 000100AAAAABBBBBCCCCC0110000AA11
+# stewx128 vr0, r0, r0
+:stewx128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b0110000 & vregD_21_25 & opcode_00_01=0b11
+{}
 
+# 000100AAAAABBBBBCCCCC1010000AA11
+# stvlx128 vr0, r0, r0
+:stvlx128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b1010000 & vregD_21_25 & opcode_00_01=0b11
+{}
 
+# 000100AAAAABBBBBCCCCC1110000AA11
+# stvlxl128 vr0, r0, r0
+:stvlxl128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b1110000 & vregD_21_25 & opcode_00_01=0b11
+{}
+
+# 000100AAAAABBBBBCCCCC1010100AA11
+# stvrx128 vr0, r0, r0
+:stvrx128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b1010100 & vregD_21_25 & opcode_00_01=0b11
+{}
+
+# 000100AAAAABBBBBCCCCC1110100AA11
+# stvrxl128 vr0, r0, r0
+:stvrxl128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b1110100 & vregD_21_25 & opcode_00_01=0b11
+{}
+
+# 000100AAAAABBBBBCCCCC0011100AA11
+# stvx128 vr0, r0, r0
+:stvx128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b0011100 & vregD_21_25 & opcode_00_01=0b11
+{}
+
+# 000100AAAAABBBBBCCCCC0111100AA11
+# stvxl128 vr0, r0, r0
+:stvxl128 vregD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b000100 & regB_16_20 & regC_11_15 & opcode_04_10=0b0111100 & vregD_21_25 & opcode_00_01=0b11
+{}
