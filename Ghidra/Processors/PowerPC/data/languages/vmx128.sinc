@@ -15,6 +15,7 @@ define token vmx128_instr(32)
 	opcode_04_04 = (4, 4)
 	opcode_04_10 = (4, 10)
 	opcode_06_09 = (6, 9)
+	opcode_16_20 = (16, 20)
 	opcode_26_31 = (26, 31)
 	vbh_00_01 = (0, 1)
 	vdh_02_03 = (2, 3)
@@ -33,6 +34,8 @@ define token vmx128_instr(32)
 	vregA_16_20_10 = (16, 20)
 	vregA_16_20_11 = (16, 20)
 	regB_16_20 = (16, 20)
+	simm_16_20 = (16, 20) signed
+	uimm_16_20 = (16, 20)
 	regC_11_15 = (11, 15)
 ;
 
@@ -158,4 +161,134 @@ vregA_16_20: vregA_16_20_11	is vregA_16_20_11 & A_10_10=0b1 & a_5_5=0b1 { export
 # 000101AAAAABBBBBCCCCCB1010B1AACC
 # vandc128 vr0, vr0, vr0
 :vandc128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1001 & opcode_04_04=0b1
+{}
+
+# 000110AAAAAsssssBBBBB0100011AABB
+# vcfpsxws128 vr0, vr0, SIMM
+:vcfpsxws128 vregD_21_25, simm_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & simm_16_20 & vregB_11_15 & opcode_04_10=0b0100011
+{}
+
+# 000110AAAAAsssssBBBBB0100111AABB
+# vcfpuxws128 vr0, vr0, UIMM
+:vcfpuxws128 vregD_21_25, uimm_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & uimm_16_20 & vregB_11_15 & opcode_04_10=0b0100111
+{}
+
+# 000110AAAAABBBBBCCCCCB0110B0AACC
+# vcmpbfp128 vr0, vr0, vr0
+:vcmpbfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0110 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB0111B0AACC
+# vcmpbfp128. vr0, vr0, vr0
+:vcmpbfp128. vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0111 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB0000B0AACC
+# vcmpeqfp128 vr0, vr0, vr0
+:vcmpeqfp128. vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0000 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB0001B0AACC
+# vcmpeqfp128. vr0, vr0, vr0
+:vcmpeqfp128. vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0001 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB0010B0AACC
+# vcmpgefp128 vr0, vr0, vr0
+:vcmpgefp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0010 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB0011B0AACC
+# vcmpgefp128. vr0, vr0, vr0
+:vcmpgefp128. vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0011 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB0100B0AACC
+# vcmpgtfp128 vr0, vr0, vr0
+:vcmpgtfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0100 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB0101B0AACC
+# vcmpgtfp128. vr0, vr0, vr0
+:vcmpgtfp128. vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0101 & opcode_04_04=0b0
+{}
+
+# 000110AAAAAsssssBBBBB0101011AABB
+# vcsxwfp128 vr0, vr0, SIMM
+:vcsxwfp128 vregD_21_25, simm_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & simm_16_20 & vregB_11_15 & opcode_04_10=0b0101011
+{}
+
+# 000110AAAAAsssssBBBBB0101111AABB
+# vcuxwfp128 vr0, vr0, UIMM
+:vcuxwfp128 vregD_21_25, uimm_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & uimm_16_20 & vregB_11_15 & opcode_04_10=0b0101111
+{}
+
+# 000110AAAAA00000CCCCC1101011AA11
+# vexptefp128 vr0, r0
+:vexptefp128 vregD_21_25, regC_11_15 is opcode_26_31=0b000100 & opcode_16_20=0b00000 & regC_11_15 & opcode_04_10=0b1101011 & vregD_21_25 & opcode_00_01=0b11
+{}
+
+# 000110AAAAA00000CCCCC1101111AA11
+# vlogefp128 vr0, r0
+:vlogefp128 vregD_21_25, regC_11_15 is opcode_26_31=0b000100 & opcode_16_20=0b00000 & regC_11_15 & opcode_04_10=0b1101111 & vregD_21_25 & opcode_00_01=0b11
+{}
+
+# 000101AAAAABBBBBCCCCCB0100B1AACC
+# vmaddcfp128 vr0, vr0, vr0
+:vmaddcfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0100 & opcode_04_04=0b1
+{}
+
+# 000101AAAAABBBBBCCCCCB0011B1AACC
+# vmaddfp128 vr0, vr0, vr0
+:vmaddfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0011 & opcode_04_04=0b1
+{}
+
+# 000110AAAAABBBBBCCCCCB1010B0AACC
+# vmaxfp128 vr0, vr0, vr0
+:vmaxfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1010 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB1011B0AACC
+# vminfp128 vr0, vr0, vr0
+:vminfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1011 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB1100B0AACC
+# vmrghw128 vr0, vr0, vr0
+:vmrghw128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1100 & opcode_04_04=0b0
+{}
+
+# 000110AAAAABBBBBCCCCCB1101B0AACC
+# vmrglw128 vr0, vr0, vr0
+:vmrglw128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1101 & opcode_04_04=0b0
+{}
+
+# 000101AAAAABBBBBCCCCCB0110B1AACC
+# vmsum3fp128 vr0, vr0, vr0
+:vmsum3fp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0110 & opcode_04_04=0b1
+{}
+
+# 000101AAAAABBBBBCCCCCB0111B1AACC
+# vmsum4fp128 vr0, vr0, vr0
+:vmsum4fp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0111 & opcode_04_04=0b1
+{}
+
+# 000101AAAAABBBBBCCCCCB0010B1AACC
+# vmulfp128 vr0, vr0, vr0
+:vmulfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0010 & opcode_04_04=0b1
+{}
+
+# 000101AAAAABBBBBCCCCCB0101B1AACC
+# vnmsubfp128 vr0, vr0, vr0
+:vnmsubfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0101 & opcode_04_04=0b1
+{}
+
+# 000101AAAAABBBBBCCCCCB1010B1AACC
+# vnor128 vr0, vr0, vr0
+:vnor128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1010 & opcode_04_04=0b1
+{}
+
+# 000101AAAAABBBBBCCCCCB1011B1AACC
+# vor128 vr0, vr0, vr0
+:vor128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1011 & opcode_04_04=0b1
 {}
