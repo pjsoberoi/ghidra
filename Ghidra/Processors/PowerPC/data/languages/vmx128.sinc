@@ -16,6 +16,7 @@ define token vmx128_instr(32)
 	opcode_04_05 = (4, 5)
 	opcode_04_10 = (4, 10)
 	opcode_06_09 = (6, 9)
+	opcode_08_10 = (8,10)
 	opcode_09_09 = (9, 9)
 	opcode_09_10 = (9, 10)
 	opcode_16_20 = (16, 20)
@@ -41,6 +42,7 @@ define token vmx128_instr(32)
 	vregC_06_08 = (6, 8)
 	regB_16_20 = (16, 20)
 	simm_16_20 = (16, 20) signed
+	uimm_06_09 = (6, 9)
 	uimm_16_20 = (16, 20)
 	regC_11_15 = (11, 15)
 ;
@@ -315,7 +317,11 @@ vregA_16_20: vregA_16_20_11	is vregA_16_20_11 & A_10_10=0b1 & a_5_5=0b1 { export
 :vpermwi128 vregD_21_25, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregB_11_15 & opcode_09_10=0b01 & opcode_04_05=0b01
 {}
 
-# TODO: vpkd3d128
+# TODO: missing x, y, z
+# 000110AAAAApppppCCCCC110ppp01AACC
+# vpkd3d128 vr0, vr0, vr0, uimm
+:vpkd3d128 vregD_21_25, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregB_11_15 & opcode_08_10=0b110 & opcode_04_05=0b01
+{}
 
 # 000101AAAAABBBBBCCCCCB1000B0AACC
 # vpkshss128 vr0, vr0, vr0
@@ -382,11 +388,15 @@ vregA_16_20: vregA_16_20_11	is vregA_16_20_11 & A_10_10=0b1 & a_5_5=0b1 { export
 :vrfiz128 vregD_21_25, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & opcode_16_20=0b00000 & vregB_11_15 & opcode_04_10=0b0111111
 {}
 
-# todo: vrlimi128
+# TODO: missing z
+# 000110AAAAAsssssBBBBB111zz01AABB
+# vrlimi128 vr0, vr0, UIMM
+:vrlimi128 vregD_21_25, uimm_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & uimm_16_20 & vregB_11_15 & opcode_08_10=0b111 & opcode_04_05=0b01
+{}
 
-# 000101AAAAABBBBBCCCCCB0001B1AACC
+# 000111AAAAABBBBBCCCCCB0001B1AACC
 # vrlw128 vr0, vr0, vr0
-:vrlw128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0001 & opcode_04_04=0b1
+:vrlw128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000111 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0001 & opcode_04_04=0b1
 {}
 
 # 000110AAAA00000CCCCC1100111AACC
@@ -399,7 +409,10 @@ vregA_16_20: vregA_16_20_11	is vregA_16_20_11 & A_10_10=0b1 & a_5_5=0b1 { export
 :vsel128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1101 & opcode_04_04=0b1
 {}
 
-# TODO: vsldoi128
+# 000100AAAAABBBBBCCCCCBiiiiB1AACC
+# vsldoi128 vr0, vr0, vr0, imm
+:vsldoi128 vregD_21_25, vregA_16_20, vregB_11_15, uimm_06_09 is opcode_26_31=0b000100 & vregD_21_25 & vregA_16_20 & vregB_11_15 & uimm_06_09 & opcode_04_04=0b1
+{}
 
 # 000101AAAAABBBBBCCCCCB1110B1AACC
 # vslo128 vr0, vr0, vr0
@@ -411,8 +424,15 @@ vregA_16_20: vregA_16_20_11	is vregA_16_20_11 & A_10_10=0b1 & a_5_5=0b1 { export
 :vslw128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0011 & opcode_04_04=0b1
 {}
 
-# todo: vspltisw128
-# todo: vspltw128
+# 000110AAAAAiiiiCCCCC1110111AACC
+# vspltisw128 vr0, vr0, imm
+:vspltisw128 vregD_21_25, simm_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & simm_16_20 & vregB_11_15 & opcode_04_10=0b1110111
+{}
+
+# 000110AAAAAiiiiCCCCC1110111AACC
+# vspltw128 vr0, vr0, uimm
+:vspltw128 vregD_21_25, uimm_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & uimm_16_20 & vregB_11_15 & opcode_04_10=0b1110011
+{}
 
 # 000110AAAAABBBBBCCCCCB0101B1AACC
 # vsraw128 vr0, vr0, vr0
@@ -429,13 +449,15 @@ vregA_16_20: vregA_16_20_11	is vregA_16_20_11 & A_10_10=0b1 & a_5_5=0b1 { export
 :vsrw128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0111 & opcode_04_04=0b1
 {}
 
-# TODO: this opcode matches vrlw128
 # 000101AAAAABBBBBCCCCCB0001B1AACC
 # vsubfp128 vr0, vr0, vr0
-#:vsubfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & #vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0001 & opcode_04_04=0b1
-#{}
+:vsubfp128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b0001 & opcode_04_04=0b1
+{}
 
-# todo: vupkd3d128
+# 000110AAAAAiiiiiBBBBB1111111AABB
+# vupkd3d128 vr0, vr0, UIMM
+:vupkd3d128 vregD_21_25, uimm_16_20, vregB_11_15 is opcode_26_31=0b000110 & vregD_21_25 & uimm_16_20 & vregB_11_15 & opcode_04_10=0b1111111
+{}
 
 # 000110AAAA00000CCCCC0111000AACC
 # vupkhsb128 vr0, vr0
