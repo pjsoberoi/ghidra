@@ -3058,3 +3058,18 @@ define pcodeop TrapAlways;
 	N_0t = (M_0t << 16) | (N_0t >> 16);
 }
 
+@ifdef HAS_FSCA_FSRRA
+# Calculate the sine and cosine approximations of FPUL
+# pattern   1111nnn011111101
+# text      fsca	FPUL, <F_REG_N>
+:fsca FPUL,FRN_0            is OP_0=0xf & FRN_0 & OP_5=0xfd & FPUL 
+unimpl
+
+# Calculate approximate inverse of the arithmetic square root
+# pattern   1111nnnn01111101
+# text      fsrra	<F_REG_N>
+:fsrra FRN_0                is OP_0=0xf & FRN_0 & OP_4=0x7d
+unimpl
+
+@endif
+
