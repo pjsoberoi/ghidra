@@ -12,6 +12,7 @@ define register offset=0x10000 size=4 [
 
 define token vmx128_instr(32)
 	opcode_00_01 = (0, 1)
+	opcode_00_10 = (0, 10)
 	opcode_04_04 = (4, 4)
 	opcode_04_05 = (4, 5)
 	opcode_04_10 = (4, 10)
@@ -40,6 +41,7 @@ define token vmx128_instr(32)
 	vregA_16_20_10 = (16, 20)
 	vregA_16_20_11 = (16, 20)
 	vregC_06_08 = (6, 8)
+	regD_21_25 = (21, 25)
 	regB_16_20 = (16, 20)
 	simm_16_20 = (16, 20) signed
 	uimm_06_09 = (6, 9)
@@ -474,17 +476,44 @@ vregA_16_20: vregA_16_20_11	is vregA_16_20_11 & A_10_10=0b1 & a_5_5=0b1 { export
 :vxor128 vregD_21_25, vregA_16_20, vregB_11_15 is opcode_26_31=0b000101 & vregD_21_25 & vregA_16_20 & vregB_11_15 & opcode_06_09=0b1100 & opcode_04_04=0b1
 {}
 
+# 011111AAAAABBBBBCCCCC10000001110
+# lvlx vr0, vr0, vr0
+:lvlx regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b10000001110
+{}
 
+# TODO: this opcode matches stvepxl from ppc_isa.sinc
+# 011111AAAAABBBBBCCCCC11000001110
+# lvlxl vr0, vr0, vr0
+#:lvlxl regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b11000001110
+#{}
 
+# 011111AAAAABBBBBCCCCC10001001110
+# lvrx vr0, vr0, vr0
+:lvrx regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b10001001110
+{}
 
+# TODO: Matches opcode of stvepx in ppc_isa.sinc
+# 011111AAAAABBBBBCCCCC11001001110
+# lvrxl vr0, vr0, vr0
+#:lvrxl regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b11001001110
+#{}
 
+# 011111AAAAABBBBBCCCCC10100001110
+# stvlx vr0, vr0, vr0
+:stvlx regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b10100001110
+{}
 
+# 011111AAAAABBBBBCCCCC11100001110
+# stvlxl vr0, vr0, vr0
+:stvlxl regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b11100001110
+{}
 
+# 011111AAAAABBBBBCCCCC10101001110
+# stvrx vr0, vr0, vr0
+:stvrx regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b10101001110
+{}
 
-
-
-
-
-
-
-
+# 011111AAAAABBBBBCCCCC11101001110
+# stvrxl vr0, vr0, vr0
+:stvrxl regD_21_25, regB_16_20, regC_11_15 is opcode_26_31=0b011111 & regD_21_25 & regB_16_20 & regC_11_15 & opcode_00_10=0b11101001110
+{}
